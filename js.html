@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Js</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+            font-weight: bold;
+            font-size: 100px;
+        }
+        .container{
+            height:170px;
+            width:600px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            display: flex;
+            gap:10px;
+
+        }
+        .hour{
+            height:150px;
+            width:180px;
+            box-shadow: 0 0 15px black;
+        }
+         .minute{
+            height:150px;
+            width:180px;
+            box-shadow: 0 0 15px black;
+
+        }
+         .second{
+            height:150px;
+            width:180px;
+            box-shadow: 0 0 15px black;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hour"></div>:
+        <div class="minute"></div>:
+        <div class="second"></div>
+    </div>
+    <script>
+        const generateDate=()=>{
+            date=new Date()
+        document.querySelector('.hour').innerHTML=date.getHours()
+        document.querySelector('.minute').innerHTML=date.getMinutes()
+        document.querySelector('.second').innerHTML=date.getSeconds()
+        }
+       setInterval(generateDate,1)
+        
+    </script>
+</body>
+</html>
