@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight:500;
+        }
+        .container{
+            width:400px;
+            height:300px;
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        form{
+            display: grid;
+            justify-content: center;
+        }
+        input{
+            border: 2px solid black;
+            height: 25px;
+            border-radius: 10px;
+        }
+        button{
+            width:80px;
+            margin-top: 5px;
+        }
+        .genderrad{
+            width: 20px;
+            margin-right: 8px;
+        }
+        .err span{
+            color: red;
+            font-size: 9px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="title">Form Validation Using Js</h2>
+            <form action="#" method="get" id="myForm" onsubmit="return validate()">
+                <div class="err">
+                    <label for="name">Username</label>
+                    <sup><span id="nameError" class="errorMsg"></span></sup>
+                    <br>
+                    <input type="text" name="name" id="name" oninput="validateInput('name')">
+                </div>
+                <div class="err">
+                    <label for="email">Email</label>
+                    <sup><span id="emailError" class="errorMsg"></span></sup>
+                    <br>
+                    <input type="text" name="email" id="email" oninput="validateInput('email')">
+                </div>
+                <div class="err">
+                    <label for="password">Password</label><sup><span id="passwordError" class="errorMsg"></span></sup>
+                    <br>
+                    <input type="password" name="password" id="password" oninput="validateInput('password')">
+                </div>
+                <div class="err">
+                    <label for="gender">Gender</label><sup><span class="genderError" id="genderError"></span></sup><br>
+                    <input class="genderrad" type="radio" name="gender" id="male" value="male" onclick="validateGender()">Male
+                    <input class="genderrad" type="radio" name="gender" id="female" value="female" onclick="validateGender()">Female
+                 </div>
+                <button class="primary-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        const validate = () => {
+            let name = document.getElementById('name').value
+            let password = document.getElementById('password').value
+            let email = document.getElementById('email').value
+            let genderMale = document.getElementById('male').checked;
+            let genderFemale = document.getElementById('female').checked;
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            document.querySelector('#nameError').innerHTML = '';
+            document.querySelector('#passwordError').innerHTML = '';
+            document.querySelector('#emailError').innerHTML = '';
+            document.querySelector('#genderError').innerHTML = '';
+
+            let hasErrors = false
+
+            if(name == '') {
+                document.querySelector('#nameError').innerHTML = '*Username required'
+                document.querySelector('#name').classList.add('errorInput')
+                hasErrors = true
+            }
+            if(password == '') {
+                document.querySelector('#passwordError').innerHTML = '*Password required'
+                document.querySelector('#password').classList.add('errorInput')
+                hasErrors = true
+            }else if(password.length < 6) {
+                document.querySelector('#passwordError').innerHTML = '*Password should have at least 6 characters'
+                document.querySelector('#password').classList.add('errorInput')
+                hasErrors = true
+            }
+            if(email == '') {
+                document.querySelector('#emailError').innerHTML = '*Email required'
+                document.querySelector('#email').classList.add('errorInput')
+                hasErrors = true
+            }else if(!emailRegex.test(email)) {
+                document.querySelector('#emailError').innerHTML = '*Invalid email format';
+                hasErrors = true;
+            }
+            if (!genderMale && !genderFemale) {
+                document.querySelector('#genderError').innerHTML = '*Select a gender';
+                hasErrors = true;
+            }
+            return !hasErrors
+        }
+
+        const validateInput = (fieldId) => {
+            removeError(fieldId);
+            validate();
+        };
+
+        const removeError = (fieldId) => {
+            document.getElementById(fieldId).classList.remove('errorInput');
+            document.querySelector(`#${fieldId}Error`).innerHTML = '';
+        };
+
+        const validateGender = () => {
+            let genderMale = document.getElementById('male').checked;
+            let genderFemale = document.getElementById('female').checked;
+            if(genderFemale || genderMale) {
+                document.querySelector('#genderError').innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</body>
+</html>
